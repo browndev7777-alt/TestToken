@@ -1,9 +1,10 @@
   import "dotenv/config";
   import hardhatToolboxViemPlugin from "@nomicfoundation/hardhat-toolbox-viem";
+  import hardhatVerify from "@nomicfoundation/hardhat-verify";
   import { configVariable, defineConfig } from "hardhat/config";
 
   export default defineConfig({
-    plugins: [hardhatToolboxViemPlugin],
+    plugins: [hardhatToolboxViemPlugin, hardhatVerify],
     solidity: {
       profiles: {
         default: {
@@ -34,6 +35,14 @@
         chainType: "l1",
         url: configVariable("SEPOLIA_RPC_URL"),
         accounts: [configVariable("SEPOLIA_PRIVATE_KEY")],
+        chainId: 11155111, // Sepolia chain ID
+        timeout: 120000, // 120 seconds
+        httpHeaders: {},
+      },
+    },
+    verify: {
+      etherscan: {
+        apiKey: configVariable("ETHERSCAN_API_KEY"),
       },
     },
   });
